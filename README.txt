@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: Tom E. Bartholdsen and Marius Mirzac
-Home page link: https://mecum.no
+Home page link: https://pbmedia.no
 Tags: comments, spam
 Requires at least: 5.1.0
 Tested up to: 5.2.2
@@ -8,11 +8,11 @@ Stable tag: 5.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+A simple plugin that publishes and update a number (like price, telephone, etc) and add a timestamp. The number (and time) will update when you add a new number. 
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+A simple plugin that publishes and update a number (like price, telephone, etc) and add a timestamp. The number (and time) will update when you add a new number. 
 
 For backwards compatibility, if this section is missing, the full length of the short description will be used, and
 Markdown parsed.
