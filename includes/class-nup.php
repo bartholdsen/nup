@@ -164,7 +164,8 @@ class Nup {
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'nup_add_dashboard_widgets' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'page_init' );
-
+		// Inne i klassen Nup, i metoden define_admin_hooks()
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
 	}
 
 	/**
