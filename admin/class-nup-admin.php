@@ -393,4 +393,33 @@ Smart to use if you are selling gasoline and need to update the price regularly.
 		$this->options = get_option( $this->plugin_name . '_options' );
 		
 	}
+	
+	// Antatt eksempel på en funksjon som lagrer data
+public function save_new_number() {
+
+    // (Her ville du hatt sikkerhetssjekker som nonces og brukerrettigheter)
+    if ( isset( $_POST['ditt_tall_felt'] ) ) {
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'nup_entries';
+
+        // Hent og saniter dataen
+        $new_value = sanitize_text_field( $_POST['ditt_tall_felt'] );
+        $current_time = current_time( 'mysql' ); // Få nåværende tid i korrekt format
+
+        // Sett inn en ny rad i databasen
+        $wpdb->insert(
+            $table_name,
+            array(
+                'timestamp' => $current_time,
+                'value'     => $new_value,
+            )
+        );
+
+        // Kanskje du fortsatt vil lagre den siste verdien i wp_options også,
+        // slik at kortkoden enkelt kan hente den?
+        update_option( 'nup_latest_number', $new_value );
+        update_option( 'nup_latest_timestamp', $current_time );
+    }
+}
 }
