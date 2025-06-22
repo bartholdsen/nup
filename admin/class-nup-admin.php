@@ -422,4 +422,65 @@ public function save_new_number() {
         update_option( 'nup_latest_timestamp', $current_time );
     }
 }
+	// Inne i klassen Nup_Admin
+
+/**
+ * Legger til en ny menyside under hovedmenyen til pluginen.
+ */
+public function add_plugin_admin_menu() {
+    
+    // Antar at du har en hovedside for å legge inn tall.
+    // Vi legger til en underside for historikken.
+    add_submenu_page(
+        'nup-main-slug', // "Slug"-en til hovedsiden din
+        'Historikk',     // Tittel på siden (<title>)
+        'Historikk',     // Tekst i menyen
+        'manage_options',// Krever at brukeren kan endre innstillinger
+        'nup-history',   // Unik "slug" for denne undersiden
+        array( $this, 'display_history_page' ) // Funksjonen som skal vise innholdet
+    );
+}
+
+/**
+ * Funksjonen som henter og viser innholdet på historikk-siden.
+ */
+public function display_history_page() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nup_entries';
+
+    // Hent alle rader fra databasen, sortert med den nyeste først
+    $entries = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY timestamp DESC" );
+
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <p>Her er en oversikt over alle tall som er registrert.</p>
+
+        <table class="wp-list-table widefat fixed striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:5%;">ID</th>
+                    <th scope="col" style="width:45%;">Registrert verdi</th>
+                    <th scope="col" style="width:50%;">Tidsstempel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ( empty( $entries ) ) : ?>
+                    <tr>
+                        <td colspan="3">Ingen data funnet.</td>
+                    </tr>
+                <?php else : ?>
+                    <?php foreach ( $entries as $entry ) : ?>
+                        <tr>
+                            <td><?php echo esc_html( $entry->id ); ?></td>
+                            <td><strong><?php echo esc_html( $entry->value ); ?></strong></td>
+                            <td><?php echo esc_html( date_format( date_create( $entry->timestamp ), 'd. M Y, H:i:s' ) ); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+}
 }
